@@ -14,10 +14,12 @@ RUN apk -U upgrade \
     && curl -qsL https://dl.k8s.io/release/v${KUBE_VERSION}/bin/${TARGETOS}/${TARGETARCH}/kubectl -o /usr/local/bin/kubectl \
     && curl -qsL https://get.helm.sh/helm-v${HELM_VERSION}-${TARGETOS}-${TARGETARCH}.tar.gz -o - | tar -xzO ${TARGETOS}-${TARGETARCH}/helm > /usr/local/bin/helm \
     && curl -qsL https://github.com/mikefarah/yq/releases/download/v${YQ_VERSION}/yq_${TARGETOS}_${TARGETARCH} -o /usr/local/bin/yq \
-    && chmod +x /usr/local/bin/helm /usr/local/bin/kubectl /usr/local/bin/yq \
+    && curl -qsL https://github.com/mozilla/sops/releases/download/v${SOPS_VERSION}/sops-v${SOPS_VERSION}.${TARGETOS} -o /usr/local/bin/sops \
+    && chmod +x /usr/local/bin/helm /usr/local/bin/kubectl /usr/local/bin/yq /usr/local/bin/sops \
     && mkdir /config \
-    && chmod g+rwx /config /root \
+    && chmod g+rwx /config /root /usr/local/bin/sops \
     && helm repo add "stable" "https://charts.helm.sh/stable" --force-update \
+    && helm plugin install https://github.com/jkroepke/helm-secrets --version v${HELM_SECRETS_VERSION} \
     && kubectl version --client .\
     && helm version\
     && curl -sL https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip -o awscliv2.zip \
