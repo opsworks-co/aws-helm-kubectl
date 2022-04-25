@@ -15,14 +15,11 @@ RUN apk -U upgrade \
     && wget -q https://github.com/mozilla/sops/releases/download/v${SOPS_VERSION}/sops-v${SOPS_VERSION}.${TARGETOS}.${TARGETARCH} -O /usr/local/bin/sops \
     && chmod +x /usr/local/bin/helm /usr/local/bin/kubectl /usr/local/bin/sops \
     && mkdir /config \
-    && chmod g+rwx /config /root /usr/local/bin/sops \
+    && chmod g+rwx /config /root \
     && helm repo add "stable" "https://charts.helm.sh/stable" --force-update \
     && helm plugin install https://github.com/jkroepke/helm-secrets --version v${HELM_SECRETS_VERSION} \
     && kubectl version --client .\
-    && helm version\
-    && apk --no-cache del \
-    binutils \
-    && rm -rf /var/cache/apk/*
+    && helm version
 
 WORKDIR /config
 
