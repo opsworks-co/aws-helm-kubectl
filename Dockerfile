@@ -7,7 +7,6 @@ ARG SOPS_VERSION
 ARG HELM_SECRETS_VERSION
 ARG TARGETOS
 ARG TARGETARCH
-ARG YQ_VERSION
 
 RUN apk -U upgrade \
     && apk add --no-cache ca-certificates bash git openssh gettext jq yq aws-cli \
@@ -22,7 +21,7 @@ RUN apk -U upgrade \
     && kubectl version --client .\
     && helm version\
     && apk --no-cache del \
-        binutils \
+    binutils \
     && rm -rf /var/cache/apk/*
 
 WORKDIR /config
