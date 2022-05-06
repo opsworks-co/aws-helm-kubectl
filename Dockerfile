@@ -1,5 +1,5 @@
 ARG BUILDPLATFORM
-FROM ${BUILDPLATFORM}alpine:3
+FROM ${BUILDPLATFORM}alpine:3.15
 
 ARG KUBE_VERSION
 ARG HELM_VERSION
@@ -18,7 +18,7 @@ RUN apk -U upgrade \
     && chmod g+rwx /config /root \
     && helm repo add "stable" "https://charts.helm.sh/stable" --force-update \
     && helm plugin install https://github.com/jkroepke/helm-secrets --version v${HELM_SECRETS_VERSION} \
-    && kubectl version --client .\
+    && kubectl version --client \
     && helm version
 
 WORKDIR /config
