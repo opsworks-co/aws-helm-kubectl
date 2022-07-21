@@ -11,10 +11,10 @@ ARG TARGETARCH
 
 RUN apk -U upgrade \
     && apk add --no-cache groff ca-certificates bash git openssh gettext jq yq make cmake gcc libc-dev libffi-dev openssl-dev \
-    && wget -q -O- "https://github.com/aws/aws-cli/archive/refs/tags/${AWSCLI_VERSION}.tar.gz" | tar -xz \
-    && cd aws-cli-${AWSCLI_VERSION} \
+    && wget -q -O- https://github.com/aws/aws-cli/archive/refs/tags/${AWSCLI_VERSION}.tar.gz | tar -xz \
     && python -m pip install --upgrade pip \
     && python -m pip install setuptools-rust \
+    && cd aws-cli-${AWSCLI_VERSION} \    
     && python setup.py build  \
     && python setup.py install \
     && cd .. && rm -rf aws-cli-${AWSCLI_VERSION} \
