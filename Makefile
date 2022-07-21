@@ -16,6 +16,7 @@ docker_build:
 	  --build-arg HELM_VERSION=$(HELM_VERSION) \
 	  --build-arg SOPS_VERSION=${SOPS_VERSION} \
 	  --build-arg HELM_SECRETS_VERSION=${HELM_SECRETS_VERSION} \
+	  --build-arg AWSCLI_VERSION=${AWSCLI_VERSION} \
 	  -t $(DOCKER_IMAGE):$(DOCKER_TAG) .
 	  
 docker_push:
