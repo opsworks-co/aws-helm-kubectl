@@ -40,6 +40,5 @@ jobs:
             HELM_VERSION=${{ env.HELM_VERSION }}
             SOPS_VERSION=${{ env.SOPS_VERSION }}
             HELM_SECRETS_VERSION=${{ env.HELM_SECRETS_VERSION }}
-            AWSCLI_VERSION=${{ env.AWSCLI_VERSION }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
