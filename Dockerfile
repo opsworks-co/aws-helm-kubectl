@@ -10,7 +10,7 @@ ARG AWS_CLI_VERSION
 RUN apk add --no-cache git unzip groff build-base libffi-dev cmake
 RUN git clone --single-branch --depth 1 -b ${AWS_CLI_VERSION} https://github.com/aws/aws-cli.git
 
-WORKDIR aws-cli
+WORKDIR /aws-cli
 RUN python -m venv venv
 RUN . venv/bin/activate
 RUN scripts/installers/make-exe
