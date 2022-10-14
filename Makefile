@@ -6,6 +6,7 @@ include .env
 # 	Latest version of helm may be found at: https://github.com/kubernetes/helm/releases
 #   Latest version of helm-secrets may be found at: https://github.com/jkroepke/helm-secrets/releases
 #   Latest version of sops may be found at: https://github.com/mozilla/sops/releases
+# 	Latest version of aws-cli may be found at: https://github.com/aws/aws-cli/tags
 
 VARS:=$(shell sed -ne 's/ *\#.*$$//; /./ s/=.*$$// p' .env )
 $(foreach v,$(VARS),$(eval $(shell echo export $(v)="$($(v))")))
