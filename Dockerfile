@@ -1,4 +1,4 @@
-ARG ALPINE_VERSION=3.17
+ARG ALPINE_VERSION=3.17.2
 ARG BUILDPLATFORM
 
 ### --------- STEP 1
@@ -25,7 +25,7 @@ RUN find /usr/local/aws-cli/v2/current/dist/awscli/botocore/data -name examples-
 ### --------- STEP 2
 
 # build the final image
-ARG ALPINE_VERSION=3.17
+ARG ALPINE_VERSION=3.17.2
 ARG BUILDPLATFORM
 
 FROM ${BUILDPLATFORM}alpine:${ALPINE_VERSION}
