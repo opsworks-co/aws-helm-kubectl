@@ -3,7 +3,7 @@ ARG BUILDPLATFORM
 
 ### --------- STEP 1
 
-FROM ${BUILDPLATFORM}python:3.10.11-alpine${ALPINE_VERSION} as builder
+FROM ${BUILDPLATFORM}python:3.11.4-alpine${ALPINE_VERSION} as builder
 
 ARG AWS_CLI_VERSION
 
@@ -25,7 +25,7 @@ RUN find /usr/local/aws-cli/v2/current/dist/awscli/botocore/data -name examples-
 ### --------- STEP 2
 
 # build the final image
-ARG ALPINE_VERSION=3.18.0
+ARG ALPINE_VERSION=3.18.2
 ARG BUILDPLATFORM
 
 FROM ${BUILDPLATFORM}alpine:${ALPINE_VERSION}
