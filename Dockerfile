@@ -34,6 +34,7 @@ ARG KUBE_VERSION
 ARG HELM_VERSION
 ARG SOPS_VERSION
 ARG HELM_SECRETS_VERSION
+ARG HELM_S3_VERSION
 ARG TARGETOS
 ARG TARGETARCH
 
@@ -50,6 +51,7 @@ RUN apk -U upgrade \
     && chmod g+rwx /config /root \
     && helm repo add "stable" "https://charts.helm.sh/stable" --force-update \
     && helm plugin install https://github.com/jkroepke/helm-secrets --version v${HELM_SECRETS_VERSION} \
+    && helm plugin install https://github.com/hypnoglow/helm-s3.git --version ${HELM_S3_VERSION} \
     && kubectl version --client \
     && helm version \
     && aws --version
