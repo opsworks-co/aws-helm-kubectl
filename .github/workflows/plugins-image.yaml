@@ -40,6 +40,7 @@ jobs:
             HELM_VERSION=${{ env.HELM_VERSION }}
             SOPS_VERSION=${{ env.SOPS_VERSION }}
             HELM_SECRETS_VERSION=${{ env.HELM_SECRETS_VERSION }}
+            HELM_S3_VERSION=${{ env.HELM_S3_VERSION }}
             AWS_CLI_VERSION=${{ env.AWS_CLI_VERSION }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
