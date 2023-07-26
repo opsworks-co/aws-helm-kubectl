@@ -1,5 +1,6 @@
 # this repo is a fork of https://github.com/dtzar/helm-kubectl with added helm secrets plugin and aws-cli
 
+- [3.12.2-1.27.4v2](https://github.com/opsworks-co/aws-helm-kubectl/releases/tag/3.12.2-1.27.4v2) - helm v3.12.2, kubectl v1.27.4, aws-cli 2.13.3, mozilla sops 3.7.3, helm-secrets 4.4.2, alpine 3.18.2, helm-s3 0.14.0
 - [3.12.2-1.27.4](https://github.com/opsworks-co/aws-helm-kubectl/releases/tag/3.12.2-1.27.4) - helm v3.12.2, kubectl v1.27.4, aws-cli 2.13.2, mozilla sops 3.7.3, helm-secrets 4.4.2, alpine 3.18.2
 - [3.12.0-1.27.2](https://github.com/opsworks-co/aws-helm-kubectl/releases/tag/3.12.0-1.27.2) - helm v3.12.0, kubectl v1.27.2, aws-cli 2.11.22, mozilla sops 3.7.3, helm-secrets 4.4.2, alpine 3.18.0
 - [3.11.3-1.26.4](https://github.com/opsworks-co/aws-helm-kubectl/releases/tag/3.11.3-1.26.4) - helm v3.11.3, kubectl v1.26.4, aws-cli 2.11.15, mozilla sops 3.7.3, helm-secrets 4.4.2, alpine 3.17.2
