@@ -35,6 +35,7 @@ ARG HELM_VERSION
 ARG SOPS_VERSION
 ARG HELM_SECRETS_VERSION
 ARG HELM_S3_VERSION
+ARG HELMFILE_VERSION
 ARG TARGETOS
 ARG TARGETARCH
 
@@ -46,7 +47,8 @@ RUN apk -U upgrade \
     && wget -q https://dl.k8s.io/release/v${KUBE_VERSION}/bin/${TARGETOS}/${TARGETARCH}/kubectl -O /usr/local/bin/kubectl \
     && wget -q https://get.helm.sh/helm-v${HELM_VERSION}-${TARGETOS}-${TARGETARCH}.tar.gz -O - | tar -xzO ${TARGETOS}-${TARGETARCH}/helm > /usr/local/bin/helm \
     && wget -q https://github.com/mozilla/sops/releases/download/v${SOPS_VERSION}/sops-v${SOPS_VERSION}.${TARGETOS}.${TARGETARCH} -O /usr/local/bin/sops \
-    && chmod +x /usr/local/bin/helm /usr/local/bin/kubectl /usr/local/bin/sops \
+    && wget -q https://github.com/helmfile/helmfile/releases/download/v${HELMFILE_VERSION}/helmfile_${HELMFILE_VERSION}_${TARGETOS}_${TARGETARCH}.tar.gz  -O - | tar -xzO helmfile  > /usr/local/bin/helmfile \
+    && chmod +x /usr/local/bin/helm /usr/local/bin/kubectl /usr/local/bin/sops /usr/local/bin/helmfile \
     && mkdir /config \
     && chmod g+rwx /config /root \
     && helm repo add "stable" "https://charts.helm.sh/stable" --force-update \
