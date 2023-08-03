@@ -20,6 +20,7 @@ docker_build:
 	  --build-arg SOPS_VERSION=${SOPS_VERSION} \
 	  --build-arg HELM_SECRETS_VERSION=${HELM_SECRETS_VERSION} \
 	  --build-arg HELM_S3_VERSION=${HELM_S3_VERSION} \
+	  --build-arg HELMFILE_VERSION=${HELMFILE_VERSION} \
 	  --build-arg AWS_CLI_VERSION=${AWS_CLI_VERSION} \
 	  -t $(DOCKER_IMAGE):$(DOCKER_TAG) .
 	  
