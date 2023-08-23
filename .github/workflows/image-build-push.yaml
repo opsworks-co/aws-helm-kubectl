@@ -15,6 +15,8 @@ jobs:
         #matrix:
           #platforms: [linux/amd64,linux/arm64]
     steps:
+      - name: uname
+        run: uname -a
       - name: Checkout
         uses: actions/checkout@v3
       - name: Read environment file
