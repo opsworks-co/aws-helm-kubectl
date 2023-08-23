@@ -47,7 +47,7 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           #platforms: linux/amd64,linux/arm64
           #platforms: ${{ matrix.platforms }}
-          platforms: linux/amd64
+          platforms: linux/arm64
           build-args: |
             KUBE_VERSION=${{ env.KUBE_VERSION }}
             HELM_VERSION=${{ env.HELM_VERSION }}
