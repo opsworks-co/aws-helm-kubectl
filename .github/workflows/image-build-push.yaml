@@ -9,7 +9,7 @@ on:
     types: [published, edited]
 
 jobs:
-  build-and-push-images:
+  build-and-push-images-linux-arm64:
     runs-on: ubuntu-latest
     #strategy:
         #matrix:
@@ -46,13 +46,6 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-      
-      
-      
-  build-and-push-linux-arm64:
-    runs-on: ubuntu-latest
-    needs: build-and-push-images
-    steps:     
       - name: Build and push
         uses: docker/build-push-action@v4
         with:
@@ -71,10 +64,41 @@ jobs:
             AWS_CLI_VERSION=${{ env.AWS_CLI_VERSION }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-  build-and-push-linux-amd64:
+  build-and-push-images-linux-amd64:
     runs-on: ubuntu-latest
-    needs: build-and-push-images
-    steps:     
+    #strategy:
+        #matrix:
+          #platforms: [linux/arm/v6,linux/arm/v7,linux/arm64]
+    steps:
+      - name: uname
+        run: uname -a
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Read environment file
+        run: cat .env >> ${GITHUB_ENV}
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: |
+            opsworksco/aws-helm-kubectl
+          tags: |
+            type=raw,value=latest,enable=${{ endsWith(github.ref, github.event.repository.default_branch) }}
+            type=ref,event=branch
+            type=ref,event=pr
+            type=semver,pattern={{version}}
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: uname
+        run: uname -a
+      - name: Login to DockerHub
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
       - name: Build and push
         uses: docker/build-push-action@v4
         with:
