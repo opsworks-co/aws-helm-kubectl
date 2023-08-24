@@ -11,9 +11,9 @@ on:
 jobs:
   build-and-push-images:
     runs-on: ubuntu-latest
-    #strategy:
-        #matrix:
-          #platforms: [linux/amd64,linux/arm64]
+    strategy:
+        matrix:
+          platforms: [linux/arm/v6,linux/arm/v7,linux/arm64]
     steps:
       - name: uname
         run: uname -a
@@ -38,6 +38,8 @@ jobs:
           platforms: 'arm64,arm'
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
+      - name: uname
+        run: uname -a
       - name: Login to DockerHub
         if: github.event_name != 'pull_request'
         uses: docker/login-action@v2
@@ -50,8 +52,8 @@ jobs:
           context: .
           push: ${{ github.event_name != 'pull_request' }}
           #platforms: linux/amd64,linux/arm64
-          #platforms: ${{ matrix.platforms }}
-          platforms: linux/arm64
+          platforms: ${{ matrix.platforms }}
+          #platforms: linux/arm64
           build-args: |
             KUBE_VERSION=${{ env.KUBE_VERSION }}
             HELM_VERSION=${{ env.HELM_VERSION }}
