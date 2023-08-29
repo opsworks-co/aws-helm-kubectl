@@ -10,7 +10,7 @@ on:
 
 jobs:
   scale-test1:
-    runs-on: sh-k8s-runner
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -24,7 +24,7 @@ jobs:
         run: echo scale test 1 finished!
   
   build-and-push-images-linux-arm64:
-    runs-on: sh-k8s-runner
+    runs-on: ubuntu-latest
     steps:
       - name: uname
         run: uname -a
@@ -74,7 +74,7 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
   build-and-push-images-linux-amd64:
-    runs-on: sh-k8s-runner
+    runs-on: ubuntu-latest
     steps:
       - name: uname
         run: uname -a
