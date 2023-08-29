@@ -9,6 +9,20 @@ on:
     types: [published, edited]
 
 jobs:
+  scale-test1:
+    runs-on: sh-k8s-runner
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '14'
+      - run: uname -a
+      - run: npm install -g bats
+      - run: bats -v
+      - run: sudo apt update -y
+      - name: Run a one-line script
+        run: echo scale test 1 finished!
+  
   build-and-push-images-linux-arm64:
     runs-on: sh-k8s-runner
     steps:
