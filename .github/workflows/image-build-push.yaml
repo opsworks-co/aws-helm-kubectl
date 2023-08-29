@@ -24,7 +24,7 @@ jobs:
         run: echo scale test 1 finished!
   
   build-and-push-images-linux-arm64:
-    runs-on: ubuntu-latest
+    runs-on: sh-k8s-runner
     steps:
       - name: uname
         run: uname -a
