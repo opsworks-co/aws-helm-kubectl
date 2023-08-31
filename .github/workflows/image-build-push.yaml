@@ -10,7 +10,9 @@ on:
 
 jobs:
   build-and-push-images-linux-arm64:
-    runs-on: sh-k8s-runner
+    runs-on: 
+      - sh-k8s-runner
+      - self-hosted
     steps:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
