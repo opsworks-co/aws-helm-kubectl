@@ -14,7 +14,7 @@ DOCKER_IMAGE ?= opsworksco/aws-helm-kubectl
 DOCKER_TAG ?= `git rev-parse --abbrev-ref HEAD`
 
 docker_build:
-	@docker buildx build \
+
 	  --build-arg KUBE_VERSION=$(KUBE_VERSION) \
 	  --build-arg HELM_VERSION=$(HELM_VERSION) \
 	  --build-arg SOPS_VERSION=${SOPS_VERSION} \
@@ -27,3 +27,4 @@ docker_build:
 docker_push:
 	# Push to DockerHub
 	docker push $(DOCKER_IMAGE):$(DOCKER_TAG)
+###
