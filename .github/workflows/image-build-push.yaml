@@ -14,9 +14,13 @@ jobs:
       - sh-k8s-runner
       - self-hosted
     steps:
+      - run: pwd
+      - uses: actions/checkout@v2
       - name: Pre build steps
         #uses: actions/checkout@v3
-        uses: ./opsworks-co/aws-helm-kubectl/.github/CompositAction
+        uses: opsworks-co/aws-helm-kubectl/.github/CompositAction
+        with:
+          tag: $GITHUB_RUN_NUMBER
       - name: Build and push
         uses: docker/build-push-action@v4
         with:
