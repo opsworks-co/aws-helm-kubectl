@@ -28,7 +28,7 @@ jobs:
         uses: docker/metadata-action@v4
         with:
           images: |
-            summerwind/actions-runner-dind
+            opsworksco/aws-helm-kubectl
           tags: |
             type=raw,value=latest,enable=${{ endsWith(github.ref, github.event.repository.default_branch) }}
             type=ref,event=branch
