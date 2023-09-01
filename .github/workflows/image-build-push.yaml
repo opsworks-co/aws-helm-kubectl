@@ -19,7 +19,12 @@ jobs:
             platforms: linux/arm64
           - os: ubuntu-latest
             platforms: linux/amd64
-    runs-on: ubuntu
+        exelude:
+          - os: sh-k8s-runner
+            platforms: linux/amd64
+          - os: ubuntu-latest
+            platforms: linux/arm64
+    runs-on: ${{matrix.os}}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
