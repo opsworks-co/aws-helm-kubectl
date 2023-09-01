@@ -15,8 +15,8 @@ jobs:
       - self-hosted
     steps:
       - name: Pre build steps
-        uses: actions/checkout@v3
-      #uses: ./.github/CompositAction
+        #uses: actions/checkout@v3
+        uses: ./opsworks-co/aws-helm-kubectl/.github/CompositAction
       - name: Build and push
         uses: docker/build-push-action@v4
         with:
