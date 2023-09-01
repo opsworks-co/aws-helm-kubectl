@@ -26,6 +26,8 @@ jobs:
             platforms: linux/arm64
     runs-on: ${{matrix.os}}
     steps:
+      - name: uname
+        run: uname -a
       - name: Checkout
         uses: actions/checkout@v3
       - name: Read environment file
