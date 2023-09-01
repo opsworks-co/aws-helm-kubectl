@@ -14,36 +14,8 @@ jobs:
       - sh-k8s-runner
       - self-hosted
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Read environment file
-        run: cat .env >> ${GITHUB_ENV}
-      - name: Docker meta
-        id: meta
-        uses: docker/metadata-action@v4
-        with:
-          images: |
-            opsworksco/aws-helm-kubectl
-          tags: |
-            type=raw,value=latest,enable=${{ endsWith(github.ref, github.event.repository.default_branch) }}
-            type=ref,event=branch
-            type=ref,event=pr
-            type=semver,pattern={{version}}
-      - name: Login to DockerHub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v2
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2    
-      - name: Login to DockerHub
-        if: github.event_name != 'pull_request'
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Pre build steps
+        uses: ./.github/CompositAction
       - name: Build and push
         uses: docker/build-push-action@v4
         with:
