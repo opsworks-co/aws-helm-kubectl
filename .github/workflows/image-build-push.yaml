@@ -15,6 +15,7 @@ jobs:
       - self-hosted
     steps:
       - run: pwd
+      - run: ls -la
       - uses: actions/checkout@v2
       - name: Pre build steps
         #uses: actions/checkout@v3
