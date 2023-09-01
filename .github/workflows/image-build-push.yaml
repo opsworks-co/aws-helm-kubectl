@@ -19,7 +19,7 @@ jobs:
             platforms: linux/arm64
           - os: ubuntu-latest
             platforms: linux/amd64
-        exelude:
+        exclude:
           - os: sh-k8s-runner
             platforms: linux/amd64
           - os: ubuntu-latest
