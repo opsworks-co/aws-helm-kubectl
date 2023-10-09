@@ -12,15 +12,15 @@ jobs:
   build-and-push-images:
     strategy:
       matrix: 
-        os: [sh-k8s-runner, ubuntu-latest]
+        os: [selfhosted-aws-helm-kubectl-arm, ubuntu-latest]
         platforms: [linux/amd64,linux/arm64]
         include:
-          - os: sh-k8s-runner
+          - os: selfhosted-aws-helm-kubectl-arm
             platforms: linux/arm64
           - os: ubuntu-latest
             platforms: linux/amd64
         exclude:
-          - os: sh-k8s-runner
+          - os: selfhosted-aws-helm-kubectl-arm
             platforms: linux/amd64
           - os: ubuntu-latest
             platforms: linux/arm64
