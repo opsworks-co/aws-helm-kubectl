@@ -8,6 +8,9 @@ on:
   release:
     types: [published, edited]
 
+env:
+  REGISTRY_IMAGE: opsworksco/aws-helm-kubectl
+
 jobs:
   build:
     strategy:
