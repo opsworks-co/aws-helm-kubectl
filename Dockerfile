@@ -3,7 +3,7 @@ ARG BUILDPLATFORM
 
 ### --------- STEP 1
 
-FROM ${BUILDPLATFORM}python:3.11.7-alpine${ALPINE_VERSION} as builder
+FROM --platform=${BUILDPLATFORM} public.ecr.aws/docker/library/python:3.11.7-alpine${ALPINE_VERSION} as builder
 
 ARG AWS_CLI_VERSION
 
@@ -25,10 +25,10 @@ RUN find /usr/local/aws-cli/v2/current/dist/awscli/botocore/data -name examples-
 ### --------- STEP 2
 
 # build the final image
-ARG ALPINE_VERSION=3.18.4
+ARG ALPINE_VERSION=3.19.1
 ARG BUILDPLATFORM
 
-FROM ${BUILDPLATFORM}alpine:${ALPINE_VERSION}
+FROM --platform=${BUILDPLATFORM} public.ecr.aws/docker/library/alpine:${ALPINE_VERSION}
 
 ARG KUBE_VERSION
 ARG HELM_VERSION
