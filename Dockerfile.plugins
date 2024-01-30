@@ -1,6 +1,5 @@
-ARG BUILDPLATFORM
 ARG REGISTRY_URL
 ARG IMAGE_TAG
-FROM --platform=${BUILDPLATFORM} opsworksco/aws-helm-kubectl:
+FROM opsworksco/aws-helm-kubectl:
 
 RUN helm plugin install https://github.com/chartmuseum/helm-push
