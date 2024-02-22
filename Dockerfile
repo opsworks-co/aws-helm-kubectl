@@ -2,7 +2,7 @@ ARG ALPINE_VERSION=3.19
 
 ### --------- STEP 1
 
-FROM public.ecr.aws/docker/library/python:3.11.7-alpine${ALPINE_VERSION} as builder
+FROM public.ecr.aws/docker/library/python:3.11.8-alpine${ALPINE_VERSION} as builder
 
 ARG AWS_CLI_VERSION
 
