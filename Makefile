@@ -8,7 +8,7 @@ include .env
 # Latest version of helm-secrets may be found at: https://github.com/jkroepke/helm-secrets/releases
 # Latest version of sops may be found at: https://github.com/mozilla/sops/releases
 # Latest version of aws-cli may be found at: https://github.com/aws/aws-cli/tags
-# Latest version of helmfile may be found at: https://github.com/helmfile/helmfile/releases/tag/v0.158.0
+# Latest version of helmfile may be found at: https://github.com/helmfile/helmfile/releases
 # Latest version of helm-s3 may be found at: https://github.com/hypnoglow/helm-s3/releases
 
 VARS:=$(shell sed -ne 's/ *\#.*$$//; /./ s/=.*$$// p' .env )
