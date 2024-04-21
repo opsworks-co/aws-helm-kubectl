@@ -71,18 +71,10 @@ jobs:
       - name: Upload digest
         uses: actions/upload-artifact@v4
         with:
-          name: digests-${{ strategy.job-index }}
+          name: digests-${{ matrix.runs-on }}
           path: /tmp/digests/*
           if-no-files-found: error
           retention-days: 1
-        # - name: Repository Dispatch
-      #   if: github.event_name != 'pull_request'
-      #   uses: peter-evans/repository-dispatch@v2
-      #   with:
-      #     token: ${{ secrets.REPO_ACCESS_TOKEN }}
-      #     repository: opsworksco/aws-helm-kubectl
-      #     event-type: image-with-plugins
-      #     client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'
 
   merge:
     runs-on: ubuntu-latest
@@ -90,10 +82,11 @@ jobs:
       - build
     steps:
       - name: Download digests
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
-          name: digests
+          pattern: digests-*
           path: /tmp/digests
+          merge-multiple: true
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
       - name: Docker meta
