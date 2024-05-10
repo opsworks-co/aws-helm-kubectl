@@ -52,6 +52,7 @@ RUN apk -U upgrade \
     && helm repo add "stable" "https://charts.helm.sh/stable" --force-update \
     && helm plugin install https://github.com/jkroepke/helm-secrets --version v${HELM_SECRETS_VERSION} \
     && helm plugin install https://github.com/hypnoglow/helm-s3.git --version ${HELM_S3_VERSION} \
+    && helm plugin install https://github.com/databus23/helm-diff --version ${HELM_DIFF_VERSION} \
     && kubectl version --client \
     && helm version \
     && aws --version

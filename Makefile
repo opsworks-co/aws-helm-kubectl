@@ -10,6 +10,7 @@ include .env
 # Latest version of aws-cli may be found at: https://github.com/aws/aws-cli/tags
 # Latest version of helmfile may be found at: https://github.com/helmfile/helmfile/releases
 # Latest version of helm-s3 may be found at: https://github.com/hypnoglow/helm-s3/releases
+# Latest version of helm-diff may be found at: https://github.com/databus23/helm-diff/releases
 
 VARS:=$(shell sed -ne 's/ *\#.*$$//; /./ s/=.*$$// p' .env )
 $(foreach v,$(VARS),$(eval $(shell echo export $(v)="$($(v))")))
@@ -25,6 +26,7 @@ docker_build:
 	  --build-arg HELM_S3_VERSION=${HELM_S3_VERSION} \
 	  --build-arg HELMFILE_VERSION=${HELMFILE_VERSION} \
 	  --build-arg AWS_CLI_VERSION=${AWS_CLI_VERSION} \
+	  --build-arg HELM_DIFF_VERSION=${HELM_DIFF_VERSION} \
 	  -t $(DOCKER_IMAGE):$(DOCKER_TAG) .
 	  
 docker_push:
