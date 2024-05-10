@@ -43,5 +43,6 @@ jobs:
             HELM_S3_VERSION=${{ env.HELM_S3_VERSION }}
             HELMFILE_VERSION=${{ env.HELMFILE_VERSION }}
             AWS_CLI_VERSION=${{ env.AWS_CLI_VERSION }}
+            HELM_DIFF_VERSION=${{ env.HELM_DIFF_VERSION }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
