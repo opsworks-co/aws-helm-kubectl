@@ -2,7 +2,8 @@
 
 You can find images built for linux/amd64 and linux/arm64 by the link https://hub.docker.com/r/opsworksco/aws-helm-kubectl
 
-- [3.14.4-1.30.0](https://github.com/opsworks-co/aws-helm-kubectl/releases/tag/3.14.4-1.29.2) - helm v3.14.4, kubectl v1.30.0, aws-cli 2.15.47, mozilla sops 3.8.1, helm-secrets 4.6.0, alpine 3.19.1, helm-s3 0.16.0, helmfile 0.164.0, helmdiff 3.9.6
+- [3.15.1-1.30.1](https://github.com/opsworks-co/aws-helm-kubectl/releases/tag/3.15.1-1.30.1) - helm v3.15.1, kubectl v1.30.1, aws-cli 2.16.4, mozilla sops 3.8.1, helm-secrets 4.6.0, alpine 3.20.0, helm-s3 0.16.0, helmfile 0.165.0, helmdiff 3.9.7
+- [3.14.4-1.30.0](https://github.com/opsworks-co/aws-helm-kubectl/releases/tag/3.14.4-1.30.0) - helm v3.14.4, kubectl v1.30.0, aws-cli 2.15.47, mozilla sops 3.8.1, helm-secrets 4.6.0, alpine 3.19.1, helm-s3 0.16.0, helmfile 0.164.0, helmdiff 3.9.6
 - [3.14.4-1.29.4](https://github.com/opsworks-co/aws-helm-kubectl/releases/tag/3.14.4-1.29.4) - helm v3.14.4, kubectl v1.29.4, aws-cli 2.15.40, mozilla sops 3.8.1, helm-secrets 4.6.0, alpine 3.19.1, helm-s3 0.16.0, helmfile 0.163.1
 - [3.14.3-1.29.2](https://github.com/opsworks-co/aws-helm-kubectl/releases/tag/3.14.3-1.29.2) - helm v3.14.3, kubectl v1.29.2, aws-cli 2.15.29, mozilla sops 3.8.1, helm-secrets 4.6.0, alpine 3.19.1, helm-s3 0.16.0, helmfile 0.162.0
 - [3.14.2-1.29.2](https://github.com/opsworks-co/aws-helm-kubectl/releases/tag/3.14.2-1.29.2) - helm v3.14.2, kubectl v1.29.2, aws-cli 2.15.22, mozilla sops 3.8.1, helm-secrets 4.5.1, alpine 3.19.1, helm-s3 0.16.0, helmfile 0.158.0
