@@ -24,7 +24,7 @@ RUN find /usr/local/aws-cli/v2/current/dist/awscli/botocore/data -name examples-
 ### --------- STEP 2
 
 # build the final image
-ARG ALPINE_VERSION=3.20.0
+ARG ALPINE_VERSION=3.20.1
 
 FROM public.ecr.aws/docker/library/alpine:${ALPINE_VERSION}
 
