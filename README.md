@@ -2,6 +2,7 @@
 
 You can find images built for linux/amd64 and linux/arm64 by the link https://hub.docker.com/r/opsworksco/aws-helm-kubectl
 
+- [3.15.3-1.30.3](https://github.com/opsworks-co/aws-helm-kubectl/releases/tag/3.15.3-1.30.3) - helm v3.15.3, kubectl v1.30.3, aws-cli 2.17.20, mozilla sops 3.9.0, helm-secrets 4.6.0, alpine 3.20.2, helm-s3 0.16.2, helmfile 0.167.0, helmdiff 3.9.9
 - [3.15.2-1.30.2](https://github.com/opsworks-co/aws-helm-kubectl/releases/tag/3.15.2-1.30.2) - helm v3.15.2, kubectl v1.30.2, aws-cli 2.17.0, mozilla sops 3.8.1, helm-secrets 4.6.0, alpine 3.20.1, helm-s3 0.16.0, helmfile 0.165.0, helmdiff 3.9.8
 - [3.15.1-1.30.1](https://github.com/opsworks-co/aws-helm-kubectl/releases/tag/3.15.1-1.30.1) - helm v3.15.1, kubectl v1.30.1, aws-cli 2.16.4, mozilla sops 3.8.1, helm-secrets 4.6.0, alpine 3.20.0, helm-s3 0.16.0, helmfile 0.165.0, helmdiff 3.9.7
 - [3.14.4-1.30.0](https://github.com/opsworks-co/aws-helm-kubectl/releases/tag/3.14.4-1.30.0) - helm v3.14.4, kubectl v1.30.0, aws-cli 2.15.47, mozilla sops 3.8.1, helm-secrets 4.6.0, alpine 3.19.1, helm-s3 0.16.0, helmfile 0.164.0, helmdiff 3.9.6
