@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - feat/matrix-build
   workflow_dispatch:
   release:
     types: [published, edited]

@@ -28,6 +28,18 @@ ARG ALPINE_VERSION=3.20.3
 
 FROM public.ecr.aws/docker/library/alpine:${ALPINE_VERSION}
 
+LABEL maintainer="Dmytro Sirant" \
+      company="Opsworks Co" \
+      alpine.version="${ALPINE_VERSION}" \
+      aws-cli.version="${AWS_CLI_VERSION}" \
+      kubectl.version="${KUBE_VERSION}" \
+      helm.version="${HELM_VERSION}" \
+      sops.version="${SOPS_VERSION}" \
+      helm.secrets.version="${HELM_SECRETS_VERSION}" \
+      helm-s3.version="${HELM_S3_VERSION}" \
+      helmfile.version="${HELMFILE_VERSION}" \
+      helm-diff.version="${HELM_DIFF_VERSION}"
+
 ARG KUBE_VERSION
 ARG HELM_VERSION
 ARG SOPS_VERSION
@@ -60,4 +72,4 @@ RUN apk -U upgrade \
 
 WORKDIR /config
 
-CMD bash
+ENTRYPOINT [ "/bin/bash" ]

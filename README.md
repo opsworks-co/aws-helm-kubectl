@@ -1,4 +1,4 @@
-# this repo is a fork of https://github.com/dtzar/helm-kubectl with added helm secrets plugin and aws-cli
+
 
 You can find images built for linux/amd64 and linux/arm64 by the link https://hub.docker.com/r/opsworksco/aws-helm-kubectl
 

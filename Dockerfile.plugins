@@ -1,5 +1,0 @@
-ARG REGISTRY_URL
-ARG IMAGE_TAG
-FROM opsworksco/aws-helm-kubectl:${IMAGE_TAG}
-
-RUN helm plugin install https://github.com/chartmuseum/helm-push
