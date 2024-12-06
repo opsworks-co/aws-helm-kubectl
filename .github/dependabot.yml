@@ -1,7 +1,23 @@
 version: 2
 updates:
-  # Maintain dependencies for GitHub Actions
+  # Docker dependencies
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 10
+    labels:
+      - "docker"
+      - "dependencies"
+    ignore:
+      - dependency-name: "alpine"
+        versions: ["edge"]
+
+  # GitHub Actions dependencies
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "daily"
+      interval: "weekly"
+    labels:
+      - "github-actions"
+      - "dependencies"
