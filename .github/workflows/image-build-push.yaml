@@ -81,11 +81,12 @@ jobs:
         run: |
           mkdir -p /tmp/digests
           digest="${{ steps.build.outputs.digest }}"
-          touch "/tmp/digests/${digest#sha256:}"
+          echo "$digest" | sed 's/^sha256://' > "/tmp/digests/${digest#sha256:}"
+
       - name: Upload digest
         uses: actions/upload-artifact@v4
         with:
-          name: digests-${{ env.KUBE_VERSION }}-${{ strategy.job-index }}
+          name: digests-${{ matrix.version }}-${{ strategy.job-index }}
           path: /tmp/digests/*
           if-no-files-found: error
           retention-days: 1
