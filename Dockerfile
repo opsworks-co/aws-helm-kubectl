@@ -2,7 +2,7 @@ ARG ALPINE_VERSION=3.20
 
 ### --------- STEP 1
 
-FROM public.ecr.aws/docker/library/python:3.11.10-alpine${ALPINE_VERSION} as builder
+FROM public.ecr.aws/docker/library/python:3.11.11-alpine${ALPINE_VERSION} as builder
 
 ARG AWS_CLI_VERSION
 
@@ -28,6 +28,16 @@ ARG ALPINE_VERSION=3.20.3
 
 FROM public.ecr.aws/docker/library/alpine:${ALPINE_VERSION}
 
+ARG KUBE_VERSION
+ARG HELM_VERSION
+ARG SOPS_VERSION
+ARG HELM_SECRETS_VERSION
+ARG HELM_S3_VERSION
+ARG HELMFILE_VERSION
+ARG HELM_DIFF_VERSION
+ARG TARGETOS
+ARG TARGETARCH
+
 LABEL maintainer="Dmytro Sirant" \
       company="Opsworks Co" \
       alpine.version="${ALPINE_VERSION}" \
@@ -39,16 +49,6 @@ LABEL maintainer="Dmytro Sirant" \
       helm-s3.version="${HELM_S3_VERSION}" \
       helmfile.version="${HELMFILE_VERSION}" \
       helm-diff.version="${HELM_DIFF_VERSION}"
-
-ARG KUBE_VERSION
-ARG HELM_VERSION
-ARG SOPS_VERSION
-ARG HELM_SECRETS_VERSION
-ARG HELM_S3_VERSION
-ARG HELMFILE_VERSION
-ARG HELM_DIFF_VERSION
-ARG TARGETOS
-ARG TARGETARCH
 
 COPY --from=builder /usr/local/aws-cli/ /usr/local/aws-cli/
 COPY --from=builder /aws-cli-bin/ /usr/local/bin/
