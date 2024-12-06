@@ -122,9 +122,9 @@ jobs:
           
           # Create the manifest list
           cd /tmp/digests
-          docker buildx imagetools create -t ${{ env.REGISTRY_IMAGE }}:${{ matrix.version }}-${{ env.HELM_VERSION }} \
+          docker buildx imagetools create -t ${{ env.REGISTRY_IMAGE }}:${{ matrix.version }} \
             $(for digest in *; do echo -n "${{ env.REGISTRY_IMAGE }}@sha256:$digest "; done)
 
       - name: Inspect image
         run: |
-          docker buildx imagetools inspect ${{ env.REGISTRY_IMAGE }}:${{ matrix.version }}-${{ env.HELM_VERSION }}
+          docker buildx imagetools inspect ${{ env.REGISTRY_IMAGE }}:${{ matrix.version }}
