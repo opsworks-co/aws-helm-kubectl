@@ -26,14 +26,6 @@ jobs:
                 # Extract only the KUBERNETES_VERSIONS line and get the array part
                 VERSIONS=$(grep '^KUBERNETES_VERSIONS=' .env | cut -d'=' -f2-)
                 echo "versions=$VERSIONS" >> $GITHUB_OUTPUT
-  test:
-    runs-on: ubuntu-latest
-    needs:
-    - define
-    steps:
-      - env:
-          OUTPUT1: ${{ needs.define.outputs.kubernetes_versions }}
-        run: echo "$OUTPUT1"
   build:
     needs:
     - define
@@ -73,8 +65,8 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
+          platforms: ${{ matrix.platforms }}
           outputs: type=image,name=${{ env.REGISTRY_IMAGE }},push-by-digest=true,name-canonical=true,push=true
-          tags: ${{ env.REGISTRY_IMAGE }}:${{ matrix.version }}-${{ env.HELM_VERSION }}
           build-args: |
             KUBE_VERSION=${{ matrix.version }}
             HELM_VERSION=${{ env.HELM_VERSION }}
@@ -104,9 +96,8 @@ jobs:
       - build
     runs-on: ubuntu-latest
     strategy:
-      fail-fast: true
-      matrix: 
-        version: ${{ needs.define.outputs.KUBERNETES_VERSIONS }}
+      matrix:
+        version: ${{fromJson(needs.define.outputs.kubernetes_versions)}}
     steps:
       - name: Download digests
         uses: actions/download-artifact@v4
@@ -122,7 +113,7 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
       - name: Create manifest list and push
-        working-directory: /tmp/digests        
+        working-directory: /tmp/digests
         run: |
           docker buildx imagetools create -t ${{ env.REGISTRY_IMAGE }}:${{ matrix.version }}-${{ env.HELM_VERSION }} \
             $(printf '${{ env.REGISTRY_IMAGE }}@sha256:%s ' *)
