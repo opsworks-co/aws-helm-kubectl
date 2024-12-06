@@ -26,49 +26,9 @@ jobs:
           # Convert KUBERNETES_VERSIONS to formatted list
           KUBE_LIST=$(echo $KUBERNETES_VERSIONS | jq -r '.[]' | sed 's/^/- `/' | sed 's/$/`/')
           
-          # Create README content
-          cat > README.md << EOF
-# AWS Helm Kubectl Docker Image
-
-Multi-architecture Docker image containing AWS CLI, Helm, Kubectl, and other commonly used tools in CI/CD.
-
-## Supported Architectures
-
-- \`linux/amd64\`
-- \`linux/arm64\`
-
-## Available Tags (Kubectl Versions)
-
-$KUBE_LIST
-
-## Components Versions
-
-All images include the following versions of tools:
-
-| Component | Version |
-|-----------|---------|
-| Helm | $HELM_VERSION |
-| AWS CLI | $AWS_CLI_VERSION |
-| SOPS | $SOPS_VERSION |
-| Helm Secrets Plugin | $HELM_SECRETS_VERSION |
-| Helm S3 Plugin | $HELM_S3_VERSION |
-| Helm Diff Plugin | $HELM_DIFF_VERSION |
-| Helmfile | $HELMFILE_VERSION |
-
-## Usage
-
-Pull the specific kubectl version you need:
-\`\`\`bash
-docker pull opsworksco/aws-helm-kubectl:1.31.3
-\`\`\`
-
-## Image Updates
-
-- Images are automatically built and pushed using GitHub Actions
-- Each tag corresponds to a specific kubectl version
-- All other components are kept at fixed versions across all images
-- Both AMD64 and ARM64 architectures are supported for each tag
-EOF
+          # Create README using template
+          envsubst '${KUBE_LIST} ${HELM_VERSION} ${AWS_CLI_VERSION} ${SOPS_VERSION} ${HELM_SECRETS_VERSION} ${HELM_S3_VERSION} ${HELM_DIFF_VERSION} ${HELMFILE_VERSION}' \
+          < .github/templates/README.md.tpl > README.md
 
       - name: Commit and push if changed
         run: |
@@ -80,3 +40,16 @@ EOF
             git commit -m "docs: Update README with latest versions"
             git push
           fi
+
+  dockerHubDescription:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Docker Hub Description
+        uses: peter-evans/dockerhub-description@v4
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          repository: opsworksco/aws-helm-kubectl
+          short-description: ${{ github.event.repository.description }}
