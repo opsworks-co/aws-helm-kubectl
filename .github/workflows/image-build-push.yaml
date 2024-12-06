@@ -105,18 +105,26 @@ jobs:
           pattern: digests-${{ matrix.version }}-*
           path: /tmp/digests
           merge-multiple: true
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
+
       - name: Login to Docker Hub
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
+
       - name: Create manifest list and push
-        working-directory: /tmp/digests
         run: |
+          # First verify the directory and files exist
+          ls -la /tmp/digests
+          
+          # Create the manifest list
+          cd /tmp/digests
           docker buildx imagetools create -t ${{ env.REGISTRY_IMAGE }}:${{ matrix.version }}-${{ env.HELM_VERSION }} \
-            $(printf '${{ env.REGISTRY_IMAGE }}@sha256:%s ' *)
+            $(for digest in *; do echo -n "${{ env.REGISTRY_IMAGE }}@sha256:$digest "; done)
+
       - name: Inspect image
         run: |
           docker buildx imagetools inspect ${{ env.REGISTRY_IMAGE }}:${{ matrix.version }}-${{ env.HELM_VERSION }}
