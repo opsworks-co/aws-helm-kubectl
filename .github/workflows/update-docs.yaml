@@ -1,0 +1,82 @@
+name: Update Documentation
+
+on:
+  push:
+    paths:
+      - '.env'
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  update-docs:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Read environment file
+        id: read_env
+        run: |
+          # Read all variables from .env
+          source .env
+          
+          # Convert KUBERNETES_VERSIONS to formatted list
+          KUBE_LIST=$(echo $KUBERNETES_VERSIONS | jq -r '.[]' | sed 's/^/- `/' | sed 's/$/`/')
+          
+          # Create README content
+          cat > README.md << EOF
+# AWS Helm Kubectl Docker Image
+
+Multi-architecture Docker image containing AWS CLI, Helm, Kubectl, and other commonly used tools in CI/CD.
+
+## Supported Architectures
+
+- \`linux/amd64\`
+- \`linux/arm64\`
+
+## Available Tags (Kubectl Versions)
+
+$KUBE_LIST
+
+## Components Versions
+
+All images include the following versions of tools:
+
+| Component | Version |
+|-----------|---------|
+| Helm | $HELM_VERSION |
+| AWS CLI | $AWS_CLI_VERSION |
+| SOPS | $SOPS_VERSION |
+| Helm Secrets Plugin | $HELM_SECRETS_VERSION |
+| Helm S3 Plugin | $HELM_S3_VERSION |
+| Helm Diff Plugin | $HELM_DIFF_VERSION |
+| Helmfile | $HELMFILE_VERSION |
+
+## Usage
+
+Pull the specific kubectl version you need:
+\`\`\`bash
+docker pull opsworksco/aws-helm-kubectl:1.31.3
+\`\`\`
+
+## Image Updates
+
+- Images are automatically built and pushed using GitHub Actions
+- Each tag corresponds to a specific kubectl version
+- All other components are kept at fixed versions across all images
+- Both AMD64 and ARM64 architectures are supported for each tag
+EOF
+
+      - name: Commit and push if changed
+        run: |
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
+          
+          if [[ -n $(git status -s) ]]; then
+            git add README.md
+            git commit -m "docs: Update README with latest versions"
+            git push
+          fi
