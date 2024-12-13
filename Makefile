@@ -19,8 +19,8 @@ DOCKER_TAG ?= `git rev-parse --abbrev-ref HEAD`
 
 docker_build:
 	@docker buildx build \
-	  --build-arg KUBE_VERSION=$(KUBE_VERSION) \
-	  --build-arg HELM_VERSION=$(HELM_VERSION) \
+	  --build-arg KUBE_VERSION=${KUBE_VERSION} \
+	  --build-arg HELM_VERSION=${HELM_VERSION} \
 	  --build-arg SOPS_VERSION=${SOPS_VERSION} \
 	  --build-arg HELM_SECRETS_VERSION=${HELM_SECRETS_VERSION} \
 	  --build-arg HELM_S3_VERSION=${HELM_S3_VERSION} \
@@ -30,7 +30,7 @@ docker_build:
       --build-arg ALPINE_PYTHON=${ALPINE_PYTHON} \
       --build-arg ALPINE_VERSION=${ALPINE_VERSION} \
 
-	  -t $(DOCKER_IMAGE):$(DOCKER_TAG) .
+	  -t ${DOCKER_IMAGE}:${DOCKER_TAG} .
 
 docker_push:
 	# Push to DockerHub

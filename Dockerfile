@@ -13,6 +13,7 @@ RUN git clone --single-branch --depth 1 -b ${AWS_CLI_VERSION} https://github.com
 WORKDIR /aws-cli
 RUN python -m venv venv
 RUN . venv/bin/activate
+RUN pip install --upgrade pip
 RUN scripts/installers/make-exe
 RUN unzip -q dist/awscli-exe.zip
 RUN aws/install --bin-dir /aws-cli-bin
@@ -28,6 +29,7 @@ RUN find /usr/local/aws-cli/v2/current/dist/awscli/botocore/data -name examples-
 FROM public.ecr.aws/docker/library/alpine:${ALPINE_VERSION}
 
 ARG ALPINE_VERSION
+ARG AWS_CLI_VERSION
 ARG KUBE_VERSION
 ARG HELM_VERSION
 ARG SOPS_VERSION
