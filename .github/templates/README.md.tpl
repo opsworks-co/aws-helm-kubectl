@@ -17,6 +17,7 @@ All current images include the following tools:
 
 | Component | Version |
 |-----------|---------|
+| Alpine | ${ALPINE_VERSION} |
 | Helm | ${HELM_VERSION} |
 | AWS CLI | ${AWS_CLI_VERSION} |
 | SOPS | ${SOPS_VERSION} |
@@ -31,4 +32,4 @@ Please check release notes for previous images components versions.
 
 Pull the specific kubectl version you need:
 ```bash
-docker pull opsworksco/aws-helm-kubectl:1.31.3
+docker pull opsworksco/aws-helm-kubectl:1.31.4
