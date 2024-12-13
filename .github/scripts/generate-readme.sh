@@ -6,7 +6,7 @@ while IFS= read -r line || [ -n "$line" ]; do
     if [[ "$line" =~ ^[^#]+$ ]]; then
         var_name=$(echo "$line" | cut -d '=' -f 1)
         var_value=$(echo "$line" | cut -d '=' -f 2- | tr -d '\n')
-        "$var_name=$var_value"
+        export "$var_name=$var_value"
     fi
 done < .env
 

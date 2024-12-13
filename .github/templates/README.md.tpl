@@ -26,8 +26,6 @@ All current images include the following tools:
 | Helm Diff Plugin | $HELM_DIFF_VERSION |
 | Helmfile | $HELMFILE_VERSION |
 
-Please check release notes for previous images components versions.
-
 ## Usage
 
 Pull the specific kubectl version you need:
