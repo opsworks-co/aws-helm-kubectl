@@ -1,0 +1,41 @@
+name: Update Documentation
+
+on:
+  pull_request_target:
+    types:
+      - opened
+      - edited
+      - synchronize
+
+jobs:
+  update-docs:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Read environment file
+        id: read_env
+        run: |
+          # Read all variables from .env
+          source .env
+
+          # Convert KUBERNETES_VERSIONS to formatted list
+          KUBE_LIST=$(echo $KUBERNETES_VERSIONS | jq -r '.[]' | sed 's/^/- `/' | sed 's/$/`/')
+
+          # Create README using template
+          envsubst '${KUBE_LIST} ${HELM_VERSION} ${AWS_CLI_VERSION} ${SOPS_VERSION} ${HELM_SECRETS_VERSION} ${HELM_S3_VERSION} ${HELM_DIFF_VERSION} ${HELMFILE_VERSION}' \
+          < .github/templates/README.md.tpl > README.md
+
+      - name: Commit and push if changed
+        run: |
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
+
+          if [[ -n $(git status -s) ]]; then
+            git add README.md
+            git commit -m "docs: Update README with latest versions"
+            git push
+          fi

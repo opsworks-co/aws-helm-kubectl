@@ -1,0 +1,130 @@
+name: Docker Build
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+  release:
+    types: [published, edited]
+
+env:
+  REGISTRY_IMAGE: opsworksco/aws-helm-kubectl
+
+jobs:
+  define:
+    runs-on: ubuntu-latest
+    outputs:
+      kubernetes_versions: ${{ steps.read_env.outputs.versions }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Read environment file
+        id: read_env
+        run: |
+                # Extract only the KUBERNETES_VERSIONS line and get the array part
+                VERSIONS=$(grep '^KUBERNETES_VERSIONS=' .env | cut -d'=' -f2-)
+                echo "versions=$VERSIONS" >> $GITHUB_OUTPUT
+  build:
+    needs:
+    - define
+    strategy:
+      fail-fast: true
+      matrix:
+        os: [selfhosted-aws-helm-kubectl-arm, ubuntu-latest]
+        platforms: [linux/amd64,linux/arm64]
+        include:
+          - os: selfhosted-aws-helm-kubectl-arm
+            platforms: linux/arm64
+          - os: ubuntu-latest
+            platforms: linux/amd64
+        exclude:
+          - os: selfhosted-aws-helm-kubectl-arm
+            platforms: linux/amd64
+          - os: ubuntu-latest
+            platforms: linux/arm64
+        version: ${{fromJson(needs.define.outputs.kubernetes_versions)}}
+    runs-on: ${{matrix.os}}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Read environment file
+        run: cat .env >> ${GITHUB_ENV}
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Login to DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Build and push by digest
+        id: build
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          platforms: ${{ matrix.platforms }}
+          outputs: type=image,name=${{ env.REGISTRY_IMAGE }},push-by-digest=true,name-canonical=true,push=true
+          build-args: |
+            KUBE_VERSION=${{ matrix.version }}
+            HELM_VERSION=${{ env.HELM_VERSION }}
+            SOPS_VERSION=${{ env.SOPS_VERSION }}
+            HELM_SECRETS_VERSION=${{ env.HELM_SECRETS_VERSION }}
+            HELM_S3_VERSION=${{ env.HELM_S3_VERSION }}
+            HELMFILE_VERSION=${{ env.HELMFILE_VERSION }}
+            AWS_CLI_VERSION=${{ env.AWS_CLI_VERSION }}
+            HELM_DIFF_VERSION=${{ env.HELM_DIFF_VERSION }}
+          labels: ${{ steps.meta.outputs.labels }}
+      - name: Export digest
+        run: |
+          mkdir -p /tmp/digests
+          digest="${{ steps.build.outputs.digest }}"
+          echo "$digest" | sed 's/^sha256://' > "/tmp/digests/${digest#sha256:}"
+
+      - name: Upload digest
+        uses: actions/upload-artifact@v4
+        with:
+          name: digests-${{ matrix.version }}-${{ strategy.job-index }}
+          path: /tmp/digests/*
+          if-no-files-found: error
+          retention-days: 1
+
+  merge:
+    needs:
+      - define
+      - build
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        version: ${{fromJson(needs.define.outputs.kubernetes_versions)}}
+    steps:
+      - name: Download digests
+        uses: actions/download-artifact@v4
+        with:
+          pattern: digests-${{ matrix.version }}-*
+          path: /tmp/digests
+          merge-multiple: true
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Create manifest list and push
+        run: |
+          # First verify the directory and files exist
+          ls -la /tmp/digests
+
+          # Create the manifest list
+          cd /tmp/digests
+          docker buildx imagetools create -t ${{ env.REGISTRY_IMAGE }}:${{ matrix.version }} \
+            $(for digest in *; do echo -n "${{ env.REGISTRY_IMAGE }}@sha256:$digest "; done)
+
+      - name: Inspect image
+        run: |
+          docker buildx imagetools inspect ${{ env.REGISTRY_IMAGE }}:${{ matrix.version }}
