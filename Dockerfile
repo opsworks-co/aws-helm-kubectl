@@ -1,4 +1,4 @@
-ARG ALPINE_PYTHON
+ARG ALPINE_PYTHON=3.11.11-alpine3.21
 
 ### --------- STEP 1
 
@@ -24,7 +24,7 @@ RUN find /usr/local/aws-cli/v2/current/dist/awscli/botocore/data -name examples-
 ### --------- STEP 2
 
 # build the final image
-ARG ALPINE_VERSION
+ARG ALPINE_VERSION=3.21.0
 
 FROM public.ecr.aws/docker/library/alpine:${ALPINE_VERSION}
 
