@@ -1,6 +1,6 @@
 #!/bin/bash
-KUBE_VERSIONS=$(tr -d '\r' < .env | grep KUBERNETES_VERSIONS | sed 's/KUBERNETES_VERSIONS=\[//' | sed 's/\]//' | tr -d '"')
-KUBE_LIST=$(echo $KUBE_VERSIONS | tr ',' '\n' | sed 's/^ *//' | sed 's/^/- `/' | sed 's/$/`/')
+export KUBE_VERSIONS=$(tr -d '\r' < .env | grep KUBERNETES_VERSIONS | sed 's/KUBERNETES_VERSIONS=\[//' | sed 's/\]//' | tr -d '"')
+export KUBE_LIST=$(echo $KUBE_VERSIONS | tr ',' '\n' | sed 's/^ *//' | sed 's/^/- `/' | sed 's/$/`/')
 
 while IFS= read -r line || [ -n "$line" ]; do
     if [[ "$line" =~ ^[^#]+$ ]]; then
