@@ -1,12 +1,11 @@
 name: Update Documentation
 
 on:
-  push:
-    paths:
-      - '.env'
-    branches:
-      - main
-  workflow_dispatch:
+  pull_request_target:
+    types:
+      - opened
+      - edited
+      - synchronize
 
 jobs:
   update-docs:
@@ -22,10 +21,10 @@ jobs:
         run: |
           # Read all variables from .env
           source .env
-          
+
           # Convert KUBERNETES_VERSIONS to formatted list
           KUBE_LIST=$(echo $KUBERNETES_VERSIONS | jq -r '.[]' | sed 's/^/- `/' | sed 's/$/`/')
-          
+
           # Create README using template
           envsubst '${KUBE_LIST} ${HELM_VERSION} ${AWS_CLI_VERSION} ${SOPS_VERSION} ${HELM_SECRETS_VERSION} ${HELM_S3_VERSION} ${HELM_DIFF_VERSION} ${HELMFILE_VERSION}' \
           < .github/templates/README.md.tpl > README.md
@@ -34,22 +33,9 @@ jobs:
         run: |
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git config --global user.name "github-actions[bot]"
-          
+
           if [[ -n $(git status -s) ]]; then
             git add README.md
             git commit -m "docs: Update README with latest versions"
             git push
           fi
-
-  dockerHubDescription:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Docker Hub Description
-        uses: peter-evans/dockerhub-description@v4
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-          repository: opsworksco/aws-helm-kubectl
-          short-description: ${{ github.event.repository.description }}
