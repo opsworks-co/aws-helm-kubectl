@@ -1,0 +1,17 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+    -   id: trailing-whitespace
+    -   id: end-of-file-fixer
+    -   id: check-yaml
+    -   id: check-json
+    -   id: check-added-large-files
+  - repo: local
+    hooks:
+      - id: generate-readme
+        name: Run Custom Script
+        entry: bash .github/scripts/generate-readme.sh
+        language: system
+        files: ^(\.env|\.github/templates/README\.md\.tpl)$
+        stages: [pre-commit]
