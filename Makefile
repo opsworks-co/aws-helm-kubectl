@@ -27,6 +27,9 @@ docker_build:
 	  --build-arg HELMFILE_VERSION=${HELMFILE_VERSION} \
 	  --build-arg AWS_CLI_VERSION=${AWS_CLI_VERSION} \
 	  --build-arg HELM_DIFF_VERSION=${HELM_DIFF_VERSION} \
+      --build-arg ALPINE_PYTHON=${ALPINE_PYTHON} \
+      --build-arg ALPINE_VERSION=${ALPINE_VERSION} \
+
 	  -t $(DOCKER_IMAGE):$(DOCKER_TAG) .
 
 docker_push:
