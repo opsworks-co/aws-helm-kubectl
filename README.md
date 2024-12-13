@@ -9,10 +9,7 @@ Multi-architecture Docker image containing AWS CLI, Helm, Kubectl, and other com
 
 ## Available Tags (Kubectl Versions)
 
-- `1.29.12`
-- `1.30.8`
-- `1.31.4`
-- `1.32.0`
+
 
 ## Components Versions
 
@@ -20,7 +17,7 @@ All current images include the following tools:
 
 | Component | Version |
 |-----------|---------|
-| Alpine | 3.21.0 |
+| Alpine | 3.20.3 |
 | Helm | 3.16.3 |
 | AWS CLI | 2.22.16 |
 | SOPS | 3.9.2 |
