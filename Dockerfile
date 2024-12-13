@@ -1,4 +1,4 @@
-ARG ALPINE_VERSION=3.20
+ARG ALPINE_VERSION=3.21
 
 ### --------- STEP 1
 
@@ -24,7 +24,7 @@ RUN find /usr/local/aws-cli/v2/current/dist/awscli/botocore/data -name examples-
 ### --------- STEP 2
 
 # build the final image
-ARG ALPINE_VERSION=3.20.3
+ARG ALPINE_VERSION=3.21.0
 
 FROM public.ecr.aws/docker/library/alpine:${ALPINE_VERSION}
 
@@ -71,5 +71,3 @@ RUN apk -U upgrade \
     && aws --version
 
 WORKDIR /config
-
-ENTRYPOINT [ "/bin/bash" ]
