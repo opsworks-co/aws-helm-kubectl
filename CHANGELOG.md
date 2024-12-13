@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.0](https://github.com/opsworks-co/aws-helm-kubectl/compare/v1.1.0...v1.2.0) (2024-12-13)
+
+### Features
+
+* Revert to Alpine 3.20.3 because of build errors of aws-cli on the latest 3.21.0 ([#32](https://github.com/opsworks-co/aws-helm-kubectl/issues/32)) ([2699342](https://github.com/opsworks-co/aws-helm-kubectl/commit/269934251fe6ff0c54813cf39b7fc1f9f287494e))
+
 ## [1.1.0](https://github.com/opsworks-co/aws-helm-kubectl/compare/v1.0.0...v1.1.0) (2024-12-13)
 
 ### Features
