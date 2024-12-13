@@ -75,6 +75,8 @@ jobs:
             HELMFILE_VERSION=${{ env.HELMFILE_VERSION }}
             AWS_CLI_VERSION=${{ env.AWS_CLI_VERSION }}
             HELM_DIFF_VERSION=${{ env.HELM_DIFF_VERSION }}
+            ALPINE_PYTHON=${{ env.ALPINE_PYTHON }}
+            ALPINE=${{ env.ALPINE }}
           labels: ${{ steps.meta.outputs.labels }}
       - name: Export digest
         run: |

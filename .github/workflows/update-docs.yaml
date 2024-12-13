@@ -1,11 +1,14 @@
 name: Update Documentation
 
 on:
-  pull_request_target:
-    types:
-      - opened
-      - edited
-      - synchronize
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - "**/.env"
+      - ".github/workflows/update-docs.yml"
+      - ".github/templates/README.md.tpl"
 
 jobs:
   update-docs:
