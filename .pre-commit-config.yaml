@@ -14,4 +14,4 @@ repos:
         entry: bash .github/scripts/generate-readme.sh
         language: system
         files: ^(\.env|\.github/templates/README\.md\.tpl)$
-        stages: [commit]
+        stages: [pre-commit]
