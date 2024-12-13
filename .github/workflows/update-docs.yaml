@@ -19,16 +19,18 @@ jobs:
       - name: Read environment file
         id: read_env
         run: |
-          # Read all variables from .env
-          source .env
+          # Fix line endings and read KUBERNETES_VERSIONS array
+          KUBE_VERSIONS=$(tr -d '\r' < .env | grep KUBERNETES_VERSIONS | sed 's/KUBERNETES_VERSIONS=\[//' | sed 's/\]//' | tr -d '"')
 
-          # Convert KUBERNETES_VERSIONS to formatted list
-          KUBE_LIST=$(echo $KUBERNETES_VERSIONS | jq -r '.[]' | sed 's/^/- `/' | sed 's/$/`/')
+          # Convert comma-separated versions to formatted list
+          KUBE_LIST=$(echo $KUBE_VERSIONS | tr ',' '\n' | sed 's/^ *//' | sed 's/^/- `/' | sed 's/$/`/')
+
+          # Read other variables from .env (excluding KUBERNETES_VERSIONS)
+          eval "$(tr -d '\r' < .env | grep -v KUBERNETES_VERSIONS)"
 
           # Create README using template
           envsubst '${KUBE_LIST} ${HELM_VERSION} ${AWS_CLI_VERSION} ${SOPS_VERSION} ${HELM_SECRETS_VERSION} ${HELM_S3_VERSION} ${HELM_DIFF_VERSION} ${HELMFILE_VERSION}' \
           < .github/templates/README.md.tpl > README.md
-
       - name: Commit and push if changed
         run: |
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
