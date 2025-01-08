@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.1](https://github.com/opsworks-co/aws-helm-kubectl/compare/v1.2.0...v1.2.1) (2025-01-08)
+
+### Bug Fixes
+
+* Bump Alpine base image to 3.20.4 ([d8630cb](https://github.com/opsworks-co/aws-helm-kubectl/commit/d8630cbc3f855c587ceb25c3b25e36bcec95ba17))
+
 ## [1.2.0](https://github.com/opsworks-co/aws-helm-kubectl/compare/v1.1.0...v1.2.0) (2024-12-13)
 
 ### Features
