@@ -21,7 +21,7 @@ All current images include the following tools:
 | Component | Version |
 |-----------|---------|
 | Alpine | 3.20.4 |
-| Helm | 3.16.4 |
+| Helm | 3.17.0 |
 | AWS CLI | 2.23.0 |
 | SOPS | 3.9.3 |
 | Helm Secrets Plugin | 4.6.2 |
