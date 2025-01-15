@@ -9,10 +9,10 @@ Multi-architecture Docker image containing AWS CLI, Helm, Kubectl, and other com
 
 ## Available Tags (Kubectl Versions)
 
-- `1.29.12`
-- `1.30.8`
-- `1.31.4`
-- `1.32.0`
+- `1.29.13`
+- `1.30.9`
+- `1.31.5`
+- `1.32.1`
 
 ## Components Versions
 
