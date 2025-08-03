@@ -1,5 +1,7 @@
 # AWS Helm Kubectl Docker Image
 
+This repository is discontiued, further work at https://github.com/Perun-Engineering/aws-helm-kubectl
+
 Multi-architecture Docker image containing AWS CLI, Helm, Kubectl, and other commonly used Kubernetes tools.
 
 ## Supported Architectures
